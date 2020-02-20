@@ -1,0 +1,71 @@
+.settings-tray {
+  position: fixed;
+  background: rgba(40, 35, 42, 0.9);
+  bottom: 0;
+  left: 0;
+  width: 20rem;
+  height: 25rem;
+  z-index: 10000;
+  border-radius: 2px;
+  opacity: 1;
+}
+
+.settings-tray.hide {
+  display: none;
+  opacity: 0;
+  transition: opacity 0.4s ease-in-out;
+}
+
+.post-title {
+  -webkit-line-clamp: 4;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.add-btn {
+  position: fixed;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+}
+
+.close-todos {
+  position: fixed;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+}
+
+.todos-overlay {
+  background: rgba(0, 0, 0, 0.9);
+}
+
+.hide {
+  display: none;
+}
+
+.todos-card {
+  position: fixed;
+  top: 0;
+  right: 0;
+}
+
+.line-through {
+  text-decoration: line-through;
+}
+
+.search-error {
+  position: fixed;
+  top: 130px;
+  right: 420px;
+}
+.time {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.work-mode {
+  position: fixed;
+  top: 0;
+}
