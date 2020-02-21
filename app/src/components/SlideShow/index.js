@@ -24,7 +24,7 @@ const responsive = {
     items: 1
   }
 }
-const url = 'https://cors-anywhere.herokuapp.com/https://quiet-bayou-45541.herokuapp.com/'
+const url = 'https://quiet-bayou-45541.herokuapp.com/'
 
 export default class SlideShow extends Component {
   constructor() {

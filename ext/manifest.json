@@ -15,15 +15,11 @@
     "persistent": false
   },
   "chrome_url_overrides": {
-    "newtab": "index.html"
+    "newtab": "src/browser_action/index.html"
   },
   "browser_action": {
     "default_icon": "icons/icon16.png"
   },
-  "permissions": [
-    "activeTab",
-    "storage",
-    "geolocation",
-    "https://cors-anywhere.herokuapp.com/https://quiet-bayou-45541.herokuapp.com/"
-  ]
+  "permissions": ["https://*/*", "http://*/*", "activeTab", "storage", "geolocation"],
+  "content_security_policy": "script-src 'self' https://www.pixinvent.com 'sha256-PK0+oytTbAxJr7VkjNUTdksxXhVyVzLKR6UrHreRNAA='; object-src 'self'"
 }
