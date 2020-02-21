@@ -1,19 +1,16 @@
 .settings-tray {
   position: fixed;
-  background: rgba(40, 35, 42, 0.9);
+  background: rgba(40, 35, 42);
   bottom: 0;
   left: 0;
-  width: 20rem;
-  height: 25rem;
+  width: 18rem;
+  height: 20rem;
   z-index: 10000;
   border-radius: 2px;
-  opacity: 1;
 }
 
 .settings-tray.hide {
   display: none;
-  opacity: 0;
-  transition: opacity 0.4s ease-in-out;
 }
 
 .post-title {
@@ -63,9 +60,14 @@
   position: fixed;
   top: 0;
   left: 0;
+  font-size: 2.5rem;
 }
 
 .work-mode {
   position: fixed;
   top: 0;
+}
+
+.work-mode-dim {
+  opacity: 0.2;
 }

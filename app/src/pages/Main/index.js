@@ -11,6 +11,7 @@ import SearchBar from '../../components/SearchBar'
 import SettingsTray from '../../components/SettingsTray'
 import SlideShow from '../../components/SlideShow'
 
+const getWorkMode = localStorage.getItem('WorkMode')
 export default class Main extends Component {
   constructor() {
     super()
@@ -22,20 +23,23 @@ export default class Main extends Component {
       showAddTodosOverlay: false,
       showAddBtn: true,
       finished: JSON.parse(localStorage.getItem('Finished')),
-      workMode: JSON.parse(localStorage.getItem('WorkMode')) ? true : false
+      workMode: JSON.parse(getWorkMode) === null ? false : JSON.parse(getWorkMode)
     }
   }
 
   componentDidMount() {
-    setInterval(() => {
+    this.interval = setInterval(() => {
       this.checkTodos()
     }, 1)
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval)
   }
 
   // Search error handler for flash message
   searchErrorHandler = () => {
     this.setState({ searchError: true })
-    console.log(Clock)
   }
 
   // Function that runs continuously to check if todos array exists in state
@@ -55,9 +59,10 @@ export default class Main extends Component {
         showAddBtn: true
       })
     }
-    this.setState({
-      workMode: JSON.parse(localStorage.getItem('WorkMode'))
-    })
+  }
+
+  mainWorkModeToggle = () => {
+    this.setState({ workMode: !this.state.workMode })
   }
 
   // Overlay for adding todos toggle handler
@@ -106,7 +111,7 @@ export default class Main extends Component {
     }
   }
 
-  // Done Button
+  // Done Button function
   clearTodos = () => {
     localStorage.removeItem('Todos')
     localStorage.setItem('Finished', false)
@@ -132,18 +137,10 @@ export default class Main extends Component {
         </h1>
 
         {/* Work mode message */}
-        {workMode ? <h3 className="work-mode mt-10 bg-warning rounded shadow p-3">You're in Work mode</h3> : null}
-
-        {/* Add Todos Button */}
-        {showAddBtn && (
-          <img
-            className="add-btn mr-2 mt-2"
-            title={`Add Todos ${userName}`}
-            style={{ width: '40px', height: '40px' }}
-            src={Add}
-            alt="add"
-            onClick={this.addTodosOverlayHandler}
-          />
+        {workMode && (
+          <h3 className="work-mode mt-10 bg-warning rounded p-3" style={{ opacity: '0.75' }}>
+            You're in Work mode
+          </h3>
         )}
 
         {/* add Todos Overlay */}
@@ -159,7 +156,7 @@ export default class Main extends Component {
         {searchError ? (
           <FlashMessage duration={3000}>
             <small className="bg-white animated shake top-0 p-1 mb-3" style={{ color: 'red', opacity: '0.6' }}>
-              Enter search question and click on the search engine you want to use
+              Enter search question and click on the platform(s) you want to search on
             </small>
           </FlashMessage>
         ) : null}
@@ -212,11 +209,39 @@ export default class Main extends Component {
           </div>
         )}
 
+        {/* Add Todos Button */}
+        {showAddBtn &&
+          (workMode ? (
+            <img
+              className="mr-2 mt-2"
+              title={`Add Todos ${userName}`}
+              src={Add}
+              alt="add"
+              onClick={this.addTodosOverlayHandler}
+              style={{ cursor: 'pointer' }}
+            />
+          ) : (
+            <img
+              className="add-btn mr-2 mt-2"
+              title={`Add Todos ${userName}`}
+              style={{ width: '40px', height: '40px' }}
+              src={Add}
+              alt="add"
+              onClick={this.addTodosOverlayHandler}
+            />
+          ))}
+
         {/* settings */}
-        <SettingsTray showSettings={showSettings} />
+        <SettingsTray
+          showSettings={showSettings}
+          mainWorkModeToggle={this.mainWorkModeToggle}
+          userName={userName}
+          workMode={workMode}
+          showSettingsHandler={this.showSettingsHandler}
+        />
         <Settings
           onClick={this.showSettingsHandler}
-          className="fixed-bottom ml-2 mb-2"
+          className="fixed-bottom ml-3 mb-3"
           size="30"
           style={{ cursor: 'pointer' }}
         />

@@ -35,15 +35,12 @@ export default class SlideShow extends Component {
       error: false
     }
   }
-  componentDidMount() {
-    this.fetchArticles()
-  }
 
   fetchArticles = () => {
     this.setState({
       isLoading: true
     })
-    fetch(url)
+    fetch(url, { signal: this.abortController.signal })
       .then((res) => res.json())
       .then((articles) => {
         return this.setState({
@@ -51,14 +48,25 @@ export default class SlideShow extends Component {
           isLoading: false
         })
       })
-      .catch((err) => {
-        if (err) {
+      .catch((error) => {
+        if (error) {
           return this.setState({
             error: true
           })
         }
+        if (error.name === 'AbortError') return
+        throw error
       })
   }
+
+  componentDidMount() {
+    this.fetchArticles()
+  }
+
+  componentWillUnmount = () => this.abortController.abort()
+
+  abortController = new window.AbortController()
+
   render() {
     const { articles, isLoading, error } = this.state
     if (isLoading) {
