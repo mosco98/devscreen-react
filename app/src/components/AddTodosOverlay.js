@@ -69,7 +69,8 @@ export default class AddTodosOverlay extends Component {
     localStorage.setItem('Todos', JSON.stringify(todos))
     localStorage.setItem('Finished', false)
     this.setState({
-      addedTodos: true
+      addedTodos: true,
+      ready: false
     })
   }
   render() {

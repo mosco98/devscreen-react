@@ -133,7 +133,7 @@ export default class SearchBar extends Component {
         <input
           className="w-100 form-control"
           type="text"
-          placeholder="Enter Search..."
+          placeholder="Enter Search keywords and click on the platform to search on..."
           onKeyPress={this.checkInput}
           autoFocus={true}
           onChange={this.inputHandler}

@@ -2,7 +2,6 @@ import '../../assets/main.css'
 
 import React, { Component } from 'react'
 import { Settings } from 'react-feather'
-import FlashMessage from 'react-flash-message'
 import Clock from 'react-live-clock'
 
 import Add from '../../assets/icons/add.png'
@@ -73,10 +72,12 @@ export default class Main extends Component {
   }
 
   // Settings Tray Handler
-  showSettingsHandler = () => {
-    this.setState((prevState) => ({
-      showSettings: !prevState.showSettings
-    }))
+  openSettingsHandler = () => {
+    this.setState({ showSettings: true })
+  }
+
+  closeSettingsHandler = () => {
+    this.setState({ showSettings: false })
   }
 
   // Function for marking complete todo
@@ -119,28 +120,19 @@ export default class Main extends Component {
   }
 
   render() {
-    const {
-      showSettings,
-      userName,
-      showAddTodosOverlay,
-      todos,
-      showAddBtn,
-      finished,
-      searchError,
-      workMode
-    } = this.state
+    const { showSettings, userName, showAddTodosOverlay, todos, showAddBtn, finished, workMode } = this.state
     return (
       <div className="w-100 vh-100 d-flex flex-column justify-content-center align-items-center animated fadeIn">
         {/* Time */}
-        <h1 className="time p-3">
+        <h1 className="time p-1">
           <Clock format="h:mma" interval={1000} />
         </h1>
 
         {/* Work mode message */}
         {workMode && (
-          <h3 className="work-mode mt-10 bg-warning rounded p-3" style={{ opacity: '0.75' }}>
+          <h4 className="work-mode mt-11 bg-warning rounded p-3" style={{ opacity: '0.75' }}>
             You're in Work mode
-          </h3>
+          </h4>
         )}
 
         {/* add Todos Overlay */}
@@ -152,14 +144,6 @@ export default class Main extends Component {
           />
         )}
 
-        {/* flash message */}
-        {searchError ? (
-          <FlashMessage duration={3000}>
-            <small className="bg-white animated shake top-0 p-1 mb-3" style={{ color: 'red', opacity: '0.6' }}>
-              Enter search question and click on the platform(s) you want to search on
-            </small>
-          </FlashMessage>
-        ) : null}
         <SearchBar searchErrorHandler={this.searchErrorHandler} workMode={workMode} />
         <div className="mt-9" />
 
@@ -168,7 +152,7 @@ export default class Main extends Component {
 
         {/* Todo card */}
         {todos && (
-          <div className={workMode ? 'mt-4 border' : 'todos-card float-right mr-2'}>
+          <div className={workMode ? 'mt-4 border' : 'todos-card float-right mr-2 mt-3'}>
             <div className="card-content shadow" style={{ width: '15rem' }}>
               <div className="card-body p-1">
                 {finished ? (
@@ -192,7 +176,7 @@ export default class Main extends Component {
                       type="checkbox"
                       onChange={this.markCompleted}
                       id={todo.id}
-                      className="float-right"
+                      className="float-right check"
                       style={{ cursor: 'pointer' }}
                       checked={todo.completed ? true : false}
                     />
@@ -200,7 +184,7 @@ export default class Main extends Component {
                   </li>
                 ))}
                 {finished && (
-                  <button className="btn-success p-2 animated fadeIn" onClick={this.clearTodos}>
+                  <button className="btn-success p-2 animated fadeIn border-0" onClick={this.clearTodos}>
                     Done
                   </button>
                 )}
@@ -210,26 +194,16 @@ export default class Main extends Component {
         )}
 
         {/* Add Todos Button */}
-        {showAddBtn &&
-          (workMode ? (
-            <img
-              className="mr-2 mt-2"
-              title={`Add Todos ${userName}`}
-              src={Add}
-              alt="add"
-              onClick={this.addTodosOverlayHandler}
-              style={{ cursor: 'pointer' }}
-            />
-          ) : (
-            <img
-              className="add-btn mr-2 mt-2"
-              title={`Add Todos ${userName}`}
-              style={{ width: '40px', height: '40px' }}
-              src={Add}
-              alt="add"
-              onClick={this.addTodosOverlayHandler}
-            />
-          ))}
+        {showAddBtn && (
+          <img
+            className="add-btn mr-2 mt-2"
+            title={`Add Todos ${userName}`}
+            src={Add}
+            alt="add"
+            onClick={this.addTodosOverlayHandler}
+            style={{ cursor: 'pointer' }}
+          />
+        )}
 
         {/* settings */}
         <SettingsTray
@@ -237,10 +211,10 @@ export default class Main extends Component {
           mainWorkModeToggle={this.mainWorkModeToggle}
           userName={userName}
           workMode={workMode}
-          showSettingsHandler={this.showSettingsHandler}
+          closeSettingsHandler={this.closeSettingsHandler}
         />
         <Settings
-          onClick={this.showSettingsHandler}
+          onClick={this.openSettingsHandler}
           className="fixed-bottom ml-3 mb-3"
           size="30"
           style={{ cursor: 'pointer' }}
