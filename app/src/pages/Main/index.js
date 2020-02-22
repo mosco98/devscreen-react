@@ -97,6 +97,31 @@ export default class Main extends Component {
     this.checkFinished()
   }
 
+  dateBuilder = (d) => {
+    let months = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'Septemeber',
+      'October',
+      'November',
+      'December'
+    ]
+    let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+
+    let day = days[d.getDay()]
+    let date = d.getDate()
+    let month = months[d.getMonth()]
+    let year = d.getFullYear()
+
+    return `${day} ${date} ${month} ${year}`
+  }
+
   // Function called when Marking complete todo item so done button can appear
   checkFinished = () => {
     const { todos } = this.state
@@ -124,9 +149,12 @@ export default class Main extends Component {
     return (
       <div className="w-100 vh-100 d-flex flex-column justify-content-center align-items-center animated fadeIn">
         {/* Time */}
-        <h1 className="time p-1">
-          <Clock format="h:mma" interval={1000} />
-        </h1>
+        <div className="time p-2 ml-2 d-flex flex-column justify-content-center align-items-center">
+          <h1>
+            <Clock format="h:mma" interval={1000} />
+          </h1>
+          <small>{this.dateBuilder(new Date())}</small>
+        </div>
 
         {/* Work mode message */}
         {workMode && (

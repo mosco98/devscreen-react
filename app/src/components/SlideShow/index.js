@@ -76,7 +76,11 @@ export default class SlideShow extends Component {
             <p className="text-center">
               Oops! Couldn't fetch posts
               <br />
-              <button className="mt-2" onClick={this.fetchArticles}>
+              <button
+                className="mt-2 btn p-2 rounded-0"
+                style={{ background: '#e9e9e9', color: '#262625', border: '1px solid #262625' }}
+                onClick={this.fetchArticles}
+              >
                 Refresh here
               </button>
             </p>

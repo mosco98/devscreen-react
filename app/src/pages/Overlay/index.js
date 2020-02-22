@@ -13,7 +13,7 @@ const Overlay = ({ setName }) => {
             😄
           </span>
         </h1>
-        <h4>What do I call you?</h4>
+        <h4>What's your name?</h4>
         <input
           className="w-75 text-center mt-3 p-2 h-25"
           type="text"
