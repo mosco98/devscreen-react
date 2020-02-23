@@ -195,11 +195,12 @@ export default class Main extends Component {
                     key={todo.id}
                     className={
                       todo.completed
-                        ? 'list-group-item p-3 pl-3 pr-3 line-through animated shake'
-                        : 'list-group-item p-3 pl-3 pr-3'
+                        ? 'list-group-item p-3 pl-3 pr-3 line-through animated shake d-flex justify-content-between align-items-center'
+                        : 'list-group-item p-3 pl-3 pr-3 d-flex justify-content-between align-items-center'
                     }
                     style={{ fontSize: '0.85rem' }}
                   >
+                    {todo.title}
                     <input
                       type="checkbox"
                       onChange={this.markCompleted}
@@ -208,7 +209,6 @@ export default class Main extends Component {
                       style={{ cursor: 'pointer' }}
                       checked={todo.completed ? true : false}
                     />
-                    {todo.title}
                   </li>
                 ))}
                 {finished && (
